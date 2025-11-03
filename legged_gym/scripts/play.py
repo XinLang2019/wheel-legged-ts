@@ -109,10 +109,12 @@ def play(args):
             scan_latent = None
 
         actions = policy(obs.detach(),scandots_latent=scan_latent)
-        #actions = torch.zeros(env_cfg.env.num_envs,12,device=env.device)
+        # actions = torch.zeros_like(actions)
         
         obs, _, rews, dones, infos,_= env.step(actions.detach())
 
+        # base_height = torch.mean(env.root_states[:, 2].unsqueeze(1) - env.measured_heights, dim=1)
+        # print(base_height)
         
         if RECORD_FRAMES:
             if i % 2:
@@ -154,6 +156,6 @@ def play(args):
 if __name__ == '__main__':
     EXPORT_POLICY = True
     RECORD_FRAMES = False
-    MOVE_CAMERA = True
+    MOVE_CAMERA = False
     args = get_args()
     play(args)

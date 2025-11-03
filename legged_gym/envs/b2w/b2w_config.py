@@ -72,8 +72,8 @@ class B2RoughWCfg( LeggedRobotCfg ):
     class control( LeggedRobotCfg.control ):
         # PD Drive parameters:
         control_type = 'P'
-        stiffness = {'hip_joint': 300.,'thigh_joint': 300.,'calf_joint': 300.,"foot_joint":0}  # [N*m/rad]
-        damping = {'hip_joint': 5,'thigh_joint': 5,'calf_joint': 5,"foot_joint":2}     # [N*m*s/rad]
+        stiffness = {'hip_joint': 400.,'thigh_joint': 400.,'calf_joint': 400.,"foot_joint":0}  # [N*m/rad]
+        damping = {'hip_joint': 10,'thigh_joint': 10,'calf_joint': 10,"foot_joint":2}     # [N*m*s/rad]
         # action scale: target angle = actionScale * action + defaultAngle
         action_scale = 0.25
         vel_scale = 10.0
@@ -125,7 +125,7 @@ class B2RoughWCfg( LeggedRobotCfg ):
         torque_multiplier_range = [0.8, 1.2]
 
         # 信号延迟
-        add_lag = False
+        add_lag = True
         randomize_lag_timesteps = True # 随机延迟步数
         randomize_lag_timesteps_perstep = False
         lag_timesteps_range = [0, 4]
@@ -197,30 +197,31 @@ class B2RoughWCfg( LeggedRobotCfg ):
             tracking_lin_vel = 4.0
             tracking_ang_vel = 2.0
             lin_vel_z = -1.0
-            ang_vel_xy = -0.05
-            orientation = -0.1
-            torques = -0.0001
+            ang_vel_xy = -0.05 # 可能影响爬高台
+            orientation = -0.5 # 复杂地形不能给太大，会影响机身适应地形倾角
+            torques = -0.00005
             dof_vel = -1e-7
             dof_acc = -1e-7
-            base_height = -10.0 
-            feet_air_time = 0.
+            dof_acc_wheel = -3e-7 # 惩罚轮子加速度
+            base_height = -1.0 
+            feet_air_time =  -0.0
             collision = -0.1
-            feet_stumble = -0.
+            feet_stumble = -0.0
             action_rate = -0.0002
             stand_still = -0.01
             dof_pos_limits = -0.0
             hip_action_l2 = -0.0
-            hip_default = -0.8
-            dof_error = -0.04
+            hip_default = -5.0
+            dof_error = -0.5
             soft_joint_pos_limit = -0.0
             feet_contact = 0.0
 
     class commands:
         curriculum = True
-        max_curriculum = 1.5
+        max_curriculum = 1.0
         num_commands = 4 # default: lin_vel_x, lin_vel_y, ang_vel_yaw, heading (in heading mode ang_vel_yaw is recomputed from heading error)
         resampling_time = 10. # time before command are changed[s]
-        heading_command = False # if true: compute ang vel command from heading error
+        heading_command = True # if true: compute ang vel command from heading error
         class ranges:
             lin_vel_x = [-1.0, 1.0] # min max [m/s]
             lin_vel_y = [-0.5, 0.5]   # min max [m/s]
@@ -239,18 +240,18 @@ class B2WRoughCfgPPO( LeggedRobotCfgPPO ):
         experiment_name = 'b2w'
         algorithm_class_name = 'PPO'
         policy_class_name = 'ActorCritic'
-        max_iterations = 20000 # number of policy updates
+        max_iterations = 30000 # number of policy updates
         num_steps_per_env = 24 # per iteration
-        save_interval = 50
+        save_interval = 500
 
         min_normalized_std = [0.05, 0.02, 0.05, 0.001] * 4
 
         if_student = False
-        load_run = 'Oct26_13-31-15_' # -1 = last run
+        load_run = -1 # -1 = last run
         checkpoint = -1 # -1 = last saved model
         
     class LSTMEncoder:
-        input_size = 45
+        input_size = 57
         hidden_size = 256
         num_layers = 3
         learning_rate = 1e-3

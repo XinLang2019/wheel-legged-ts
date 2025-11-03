@@ -9,3 +9,6 @@ License-File: LICENSE
 Requires-Dist: isaacgym
 Requires-Dist: rsl-rl
 Requires-Dist: matplotlib
+Requires-Dist: tensorboard
+Requires-Dist: numpy==1.21.0
+Requires-Dist: pybullet

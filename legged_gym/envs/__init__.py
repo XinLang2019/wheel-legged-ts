@@ -35,6 +35,8 @@ from .go2w.go2w_config import GO2WCfg, GO2WCfgPPO
 from .b2w.b2w_config import B2RoughWCfg, B2WRoughCfgPPO
 from .m20.m20_config import M20RoughWCfg,M20RoughCfgPPO
 
+from .x3w.x3w_config import X3WRoughCfg, X3WRoughCfgPPO
+
 import os
 
 from legged_gym.utils.task_registry import task_registry
@@ -42,3 +44,5 @@ from legged_gym.utils.task_registry import task_registry
 task_registry.register( "go2w", LeggedRobot, GO2WCfg(), GO2WCfgPPO() )
 task_registry.register( "b2w", LeggedRobot, B2RoughWCfg(), B2WRoughCfgPPO() )
 task_registry.register( "m20", LeggedRobot, M20RoughWCfg(), M20RoughCfgPPO() )
+
+task_registry.register( "x3w", LeggedRobot, X3WRoughCfg(), X3WRoughCfgPPO() )

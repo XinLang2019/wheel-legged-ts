@@ -33,9 +33,11 @@ Train and play
 
 1. train teacher:
 ```python legged_gym/scripts/train.py --task=go2w --headless```
+    - use multi GPU `python legged_gym/scripts/train.py --task=b2w --headless --sim_device=cuda:2 --rl_device=cuda:2`
     - To run on CPU add following arguments: `--sim_device=cpu`, `--rl_device=cpu` (sim on CPU and rl on GPU is possible).
     - To run headless (no rendering) add `--headless`.
     - **Important**: To improve performance, once the training starts press `v` to stop the rendering. You can then enable it later to check the progress.
+
 
 2. train student:
     ```python legged_gym/scripts/train.py --task=go2w --headless --if_student```

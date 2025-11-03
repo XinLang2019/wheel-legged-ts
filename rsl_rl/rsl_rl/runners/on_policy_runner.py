@@ -170,7 +170,14 @@ class OnPolicyRunner:
             ep_infos.clear()
 
             if(it == 0):
-                os.system("cp ./legged_gym/envs/b2w/b2w_config.py " + self.log_dir + "/")
+                if(self.env.cfg.asset.name=="b2w"):
+                    os.system("cp ./legged_gym/envs/b2w/b2w_config.py " + self.log_dir + "/")
+                elif(self.env.cfg.asset.name=="m20"):
+                    os.system("cp ./legged_gym/envs/m20/m20_config.py " + self.log_dir + "/")
+                elif(self.env.cfg.asset.name=="x3w"):
+                    os.system("cp ./legged_gym/envs/x3w/x3w_config.py " + self.log_dir + "/")
+                else:
+                    print("Not have this robot name!")
         
         self.current_learning_iteration += num_learning_iterations
         self.save(os.path.join(self.log_dir, 'model_{}.pt'.format(self.current_learning_iteration)))

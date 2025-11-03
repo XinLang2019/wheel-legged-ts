@@ -1525,3 +1525,14 @@ class LeggedRobot(BaseTask):
         
         return reward
 
+    def _reward_cheat(self):
+        # penalty cheating to bypass the obstacle
+        forward = quat_apply(self.base_quat, self.forward_vec)
+        
+        heading = torch.atan2(forward[:self.roughflat_start_idx, 1], forward[:self.roughflat_start_idx, 0])
+        cheat = (heading > 0.2) | (heading < -0.2)  # original: 1.0
+        
+        cheat_penalty = torch.zeros(self.num_envs, device=self.device)
+        cheat_penalty[:self.roughflat_start_idx] = cheat
+        return cheat_penalty
+
