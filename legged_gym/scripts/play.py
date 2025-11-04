@@ -112,7 +112,6 @@ def play(args):
         # actions = torch.zeros_like(actions)
         
         obs, _, rews, dones, infos,_= env.step(actions.detach())
-
         # base_height = torch.mean(env.root_states[:, 2].unsqueeze(1) - env.measured_heights, dim=1)
         # print(base_height)
         

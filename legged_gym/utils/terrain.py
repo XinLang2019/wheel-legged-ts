@@ -145,7 +145,8 @@ class Terrain:
         stepping_stones_size = 1.5 * (1.05 - difficulty)
         stone_distance = 0.05 if difficulty == 0 else 0.1
         gap_size = 1. * difficulty
-        pit_depth = 0.6 * difficulty
+        pit_depth = 1.0 * difficulty
+        
         tilt_width = 0.32 - 0.04 * difficulty
         stair_step_width = 0.30 + random.random() * 0.04
         if choice < self.proportions[0]:

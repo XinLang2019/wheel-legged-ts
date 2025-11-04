@@ -84,6 +84,8 @@ class B2RoughWCfg( LeggedRobotCfg ):
     class terrain( LeggedRobotCfg.terrain ):
         mesh_type = 'trimesh'   #trimesh
         measure_heights = True
+        # terrain types: [wave, rough slope, stairs up, stairs down, discrete, gap, pit, tilt, crawl, rough_flat]
+        terrain_proportions = [0.0, 0.10, 0.25, 0.25, 0.2, 0., 0.2, 0.0, 0.0, 0.0]
 
     class asset( LeggedRobotCfg.asset ):
         file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/b2w/urdf/b2w.urdf'
@@ -197,8 +199,8 @@ class B2RoughWCfg( LeggedRobotCfg ):
             tracking_lin_vel = 4.0
             tracking_ang_vel = 2.0
             lin_vel_z = -1.0
-            ang_vel_xy = -0.05 # 可能影响爬高台
-            orientation = -0.5 # 复杂地形不能给太大，会影响机身适应地形倾角
+            ang_vel_xy = -0.0 # 可能影响爬高台
+            orientation = -0.0 # 复杂地形不能给太大，会影响机身适应地形倾角
             torques = -0.00005
             dof_vel = -1e-7
             dof_acc = -1e-7
@@ -215,6 +217,7 @@ class B2RoughWCfg( LeggedRobotCfg ):
             dof_error = -0.5
             soft_joint_pos_limit = -0.0
             feet_contact = 0.0
+            cheat = -5.0
 
     class commands:
         curriculum = True

@@ -276,6 +276,7 @@ class OnPolicyRunner:
         self.alg.lstm_actor.train()
 
         num_pretrain_iter = 0
+        
         for it in range(self.current_learning_iteration, tot_iter):
             start = time.time()
             scan_latent_buffer = []
@@ -347,7 +348,6 @@ class OnPolicyRunner:
                (it-self.start_learning_iteration >= 5000 and it % (5*self.save_interval) == 0):
                     self.save(os.path.join(self.log_dir, 'model_{}.pt'.format(it)))
             ep_infos.clear()
-
 
     def log_lstm(self, locs, width=80, pad=35):
         self.tot_timesteps += self.num_steps_per_env * self.env.num_envs
